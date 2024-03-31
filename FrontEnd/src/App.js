@@ -8,7 +8,8 @@ import Profile from "./Pages/Profile/Profile";
 import Error from "./Pages/Error/Error";
 
 //LAYOUTS
-
+import Header from "./Layouts/Header";
+import Footer from "./Layouts/Footer";
 
 //COMPONENTS
 
@@ -25,12 +26,14 @@ function App() {
   return (
     <Router>
       <div>
+        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<Error />} />
         </Routes>
+        <Footer />
       </div>
     </Router>
   );
