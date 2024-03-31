@@ -1,0 +1,114 @@
+//Component
+@import '../Components/Feature/feature';
+@import '../Components/HeroBanner/heroBanner';
+
+//Layout
+@import '../Layouts/layouts';
+
+//Page
+@import '../Pages/Error/error';
+@import '../Pages/Login/login';
+@import '../Pages/Profile/profile';
+
+
+html {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+}
+  
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+.main {flex: 1;}
+  
+.bg-dark {background-color: #12002b;}
+  
+.sr-only {
+    border: 0 !important;
+    clip: rect(1px, 1px, 1px, 1px) !important; /* 1 */
+    -webkit-clip-path: inset(50%) !important;
+    clip-path: inset(50%) !important; /* 2 */
+    height: 1px !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 1px !important;
+    white-space: nowrap !important; /* 3 */
+}
+
+
+
+
+
+
+
+
+
+
+
+.header {
+    color: #fff;
+    margin-bottom: 2rem;
+  }
+  
+  
+  
+  .edit-button {
+    border-color: #00bc77;
+    background-color: #00bc77;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px;
+  }
+
+  
+  .user-edit {
+    color: black;
+    .sign-in-content {
+      margin: 0 auto;
+      border: solid 10px rgb(138, 124, 124);
+      padding-top: 1rem;
+    }
+    h1 {
+      margin-top: 0;
+    }
+    i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .button-container {
+      display: flex;
+      gap: 1rem;
+  
+      .save-button,
+      .cancel-button {
+        display: block;
+        width: 100%;
+        padding: 8px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-top: 1rem;
+        border-color: #00bc77;
+        background-color: #00bc77;
+        color: #fff;
+      }
+    }
+  
+    .edit-input {
+      margin-bottom: 10px;
+      .label {
+        display: inline-block;
+        width: 150px;
+        text-align: right;
+      }
+    }
+  }
