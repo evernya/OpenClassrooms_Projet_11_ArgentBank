@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 //REDUX
 import { useDispatch, useSelector } from "react-redux";
-import { logoutSuccess } from "../Reducers/AuthSlice";
+import { logoutUser } from "../Reducers/AuthSlice";
 import { profileUser } from "../Reducers/ProfileSlice";
 
 //ASSET
@@ -35,7 +35,7 @@ export default function Header() {
     const handleLogout = (e) => {
         e.preventDefault();
 
-        dispatch(logoutSuccess());
+        dispatch(logoutUser());
         navigate("/");
         dispatch(profileUser.pending());
     }
@@ -49,13 +49,16 @@ export default function Header() {
             </Link>
 
             {authToken ? (
-                <div className="main-nav__item">
+                <div className="main-nav__item-container">
+                    <div className="main-nav__item">
                     <Link to={"/profile"} className="main-nav__item--info-user">
                         <FontAwesomeIcon icon={faCircleUser} className="main-nav__item--icon" />
                         <p>{profileUserData ? profileUserData.firstName + " " : ""}</p>
                     </Link>
-
-                    <Link onClick={handleLogout} to={"/"}><FontAwesomeIcon icon={faRightFromBracket} className="main-nav__item--icon" />Sign Out</Link>
+                    </div>
+                    <div className="main-nav__item">
+                        <Link onClick={handleLogout} to={"/"}><FontAwesomeIcon icon={faRightFromBracket} className="main-nav__item--icon" />Sign Out</Link>
+                    </div>
                 </div>
             ) : (
                 <div className="main-nav__item">

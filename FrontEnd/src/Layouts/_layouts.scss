@@ -21,11 +21,14 @@
         }
     }
 
-    &__item{
+    &__item-container{
         display: flex;
         flex-direction: row;
         align-items: center;
         gap: 20px;
+    }
+    
+    &__item{
         text-decoration: none;
         margin-right: 0.5rem;
         
