@@ -53,7 +53,7 @@ export default function Header() {
                     <div className="main-nav__item">
                     <Link to={"/profile"} className="main-nav__item--info-user">
                         <FontAwesomeIcon icon={faCircleUser} className="main-nav__item--icon" />
-                        <p>{profileUserData ? profileUserData.firstName + " " : ""}</p>
+                        <p>{profileUserData ? profileUserData.userName + " " : ""}</p>
                     </Link>
                     </div>
                     <div className="main-nav__item">
