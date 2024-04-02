@@ -32,7 +32,7 @@ export const loginUser = createAsyncThunk (
 //Créer une fonction thunk async pour la déconnexion
 export const logoutUser = () => (dispatch) => {
     //déclenchement d'une action Redux pour déconnecter l'utilisateur
-    dispatch(authActions.logoutSuccess());
+    dispatch(authSlice.actions.logoutSuccess());
 }
 
 //Création d'un slice pour gérer l'authentification
@@ -75,4 +75,5 @@ const authSlice = createSlice({
 
 //Exporter les actions et le reducer pour l'auth
 export const authActions = { loginUser, logoutUser };
+export const { logoutSuccess } = authSlice.actions;
 export default authSlice.reducer;
