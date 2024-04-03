@@ -19,7 +19,6 @@ export const loginUser = createAsyncThunk (
             // récupération du token à partir de la réponse de l'API + dans le local storage
             const authToken = response.data.body.token; 
             localStorage.setItem('authToken', JSON.stringify(response));
-            console.log("Je suis dans userSlice :" + localStorage.getItem('user'));
 
             //retourner le token d'auth dans le state redux
             return authToken;
@@ -44,12 +43,13 @@ const authSlice = createSlice({
         token: null, //token d'auth inital est null car l'utilisateur n'est pas encore connecté
         loading: false,
         error: null,
+        user: null,
     },
     //3rd key : définitions de reducers
     reducers: {
         logoutSuccess: (state) => {
             state.token = null; // réinitialiser le token d'auth à null
-            localStorage.removeItem("authToken");
+            state.user = null;
         },
     },
     extraReducers: (builder) => {
@@ -69,9 +69,9 @@ const authSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         })
-
     }
 });
+
 
 //Exporter les actions et le reducer pour l'auth
 export const authActions = { loginUser, logoutUser };
