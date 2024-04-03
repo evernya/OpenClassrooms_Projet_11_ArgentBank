@@ -1,3 +1,61 @@
+.profile-header {
+  color: #fff;
+  margin-bottom: 2rem;
+}
+.profile-header__edit-button {
+  border-color: #00bc77;
+  background-color: #00bc77;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.modal__content {
+  box-sizing: border-box;
+  background-color: white;
+  width: 400px;
+  margin: 3rem auto 0 auto;
+  padding: 2rem;
+}
+.modal__content h2 {
+  color: #2c3e50;
+}
+.modal__content--wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.modal__content--wrapper-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.modal__content--wrapper-input label {
+  display: inline-block;
+  width: 100px;
+  color: black;
+}
+.modal__content--buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.modal__content--buttons__save-btn, .modal__content--buttons__cancel-btn {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-color: #00bc77;
+  background-color: #00bc77;
+  color: #fff;
+}
+
+.error-message {
+  color: red;
+}
+
 .features {
   display: flex;
   flex-direction: column;
@@ -24,8 +82,40 @@
   margin-bottom: 0.5rem;
 }
 
+.input__wrapper {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+.input__wrapper label {
+  font-weight: bold;
+}
+.input__wrapper input {
+  padding: 5px;
+  font-size: 1.2rem;
+}
+.input__remember {
+  display: flex;
+}
+.input__remember label {
+  margin-left: 0.25rem;
+}
+
+.sign-in-button {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  border-color: #00bc77;
+  background-color: #00bc77;
+  color: #fff;
+}
+
 .hero {
-  background-image: url("../Assets/bank-tree.jpeg");
+  background-image: url("../Assets/bank-tree.webp");
   background-position: 0 -50px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -76,12 +166,74 @@
   }
 }
 
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px;
+}
+.main-nav a {
+  font-weight: bold;
+  color: #2c3e50;
+  text-decoration: none;
+}
+.main-nav__logo {
+  display: flex;
+  align-items: center;
+}
+.main-nav__logo--image {
+  max-width: 100%;
+  width: 200px;
+}
+.main-nav__item-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+.main-nav__item {
+  text-decoration: none;
+  margin-right: 0.5rem;
+}
+.main-nav__item:hover {
+  text-decoration: underline;
+}
+.main-nav__item--info-user {
+  display: flex;
+  align-items: center;
+}
+.main-nav__item--icon {
+  padding-right: 5px;
+}
+.main-nav__info-user {
+  display: flex;
+}
+
+.main-nav a.router-link-exact-active {
+  color: #42b983;
+}
+
+.nav-logged-container {
+  display: flex;
+  align-items: center;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  border-top: 2px solid #ccc;
+  padding: 2rem 0 1.5rem;
+}
+.footer__text {
+  margin: 0;
+  padding: 0;
+}
+
 .login__content {
   box-sizing: border-box;
   background-color: white;
   width: 300px;
-  margin: 0 auto;
-  margin-top: 3rem;
+  margin: 3rem auto 0 auto;
   padding: 2rem;
 }
 .login__content--icon {
@@ -184,57 +336,4 @@ body {
   position: absolute !important;
   width: 1px !important;
   white-space: nowrap !important; /* 3 */
-}
-
-.header {
-  color: #fff;
-  margin-bottom: 2rem;
-}
-
-.edit-button {
-  border-color: #00bc77;
-  background-color: #00bc77;
-  color: #fff;
-  font-weight: bold;
-  padding: 10px;
-}
-
-.user-edit {
-  color: black;
-}
-.user-edit .sign-in-content {
-  margin: 0 auto;
-  border: solid 10px rgb(138, 124, 124);
-  padding-top: 1rem;
-}
-.user-edit h1 {
-  margin-top: 0;
-}
-.user-edit i {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-.user-edit .button-container {
-  display: flex;
-  gap: 1rem;
-}
-.user-edit .button-container .save-button,
-.user-edit .button-container .cancel-button {
-  display: block;
-  width: 100%;
-  padding: 8px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-top: 1rem;
-  border-color: #00bc77;
-  background-color: #00bc77;
-  color: #fff;
-}
-.user-edit .edit-input {
-  margin-bottom: 10px;
-}
-.user-edit .edit-input .label {
-  display: inline-block;
-  width: 150px;
-  text-align: right;
 }/*# sourceMappingURL=style.css.map */

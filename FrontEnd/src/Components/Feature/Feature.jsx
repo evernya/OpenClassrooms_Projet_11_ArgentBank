@@ -1,7 +1,7 @@
 //ASSETS
-import iconChat from "../../Assets/icon-chat.png";
-import iconMoney from "../../Assets/icon-money.png";
-import iconSecurity from "../../Assets/icon-security.png";
+import iconChat from "../../Assets/icon-chat.webp";
+import iconMoney from "../../Assets/icon-money.webp";
+import iconSecurity from "../../Assets/icon-security.webp";
 
 //CSS
 import "../../Style/style.css"
