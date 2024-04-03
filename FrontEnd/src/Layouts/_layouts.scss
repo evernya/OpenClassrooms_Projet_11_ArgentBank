@@ -21,28 +21,44 @@
         }
     }
 
-    // &__logged-container{
-    //     display: flex;
-    //     align-items: center;
-    //   }
-
+    &__item-container{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 20px;
+    }
+    
     &__item{
         text-decoration: none;
         margin-right: 0.5rem;
-
+        
         &:hover{
             text-decoration: underline;
         }
 
-        &--icone{
-            padding-right: 10px;
+        &--info-user{
+            display: flex;
+            align-items: center;
+        }
+
+        &--icon{
+            padding-right: 5px;
         }
       }
+
+    &__info-user{
+        display: flex;
+    }
   } 
 
 .main-nav a.router-link-exact-active{
     color: #42b983;
 }
+
+.nav-logged-container{
+        display: flex;
+        align-items: center;
+      }
 
 //FOOTER
 .footer {
