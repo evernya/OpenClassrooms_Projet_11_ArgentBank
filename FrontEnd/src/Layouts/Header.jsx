@@ -42,7 +42,7 @@ export default function Header() {
 
     //affichage (render)
     return (
-        <nav className="main-nav nav-logged-container">
+        <nav className="main-nav">
             <Link className="main-nav__logo" to={"/"}>
                 <img className="main-nav__logo--image" src={logo} alt="Argent Bank Logo" />
                 <h1 className="sr-only">Argent Bank</h1>

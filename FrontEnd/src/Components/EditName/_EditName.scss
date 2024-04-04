@@ -17,8 +17,10 @@
     box-sizing: border-box;
     background-color: white;
     width: 400px;
-    margin: 3rem auto 0 auto;
+    margin: auto;
     padding: 2rem;
+
+    @media (max-width: 720px) {width: 80%;}
 
     h2{color: #2c3e50}
 
