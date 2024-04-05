@@ -32,11 +32,7 @@ export default function FormLogin() {
         dispatch(loginUser(userCredentials)).then((result) => {
             if (result.payload) {    
                 const authToken = result.payload;
-
-                //A VERIFIER
-                dispatch(profileUser(authToken)).then((res) => {});
-                console.log("Je passe.")
-
+                dispatch(profileUser(authToken));
                 navigate("/profile");
             } else {
                 setErrorLoginMessage("Email ou mot de passe incorrect");

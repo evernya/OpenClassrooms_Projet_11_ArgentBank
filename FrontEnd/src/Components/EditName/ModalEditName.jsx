@@ -43,7 +43,10 @@ export default function ModalEditName({ modalOnClick }) {
         })
 
       const responseData = response.data.body.userName;
+      
       dispatch(profileUser(authToken)); // màj username dans store
+      setEditUsername(""); // Réinitialiser le champ username
+      setInfoError(""); // Réinitialiser le message d'erreur
 
       alert('Pseudo mis à jour avec succès !');
     } catch (error) {
