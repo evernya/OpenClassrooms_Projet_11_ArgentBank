@@ -43,12 +43,14 @@ export default function ModalEditName({ modalOnClick }) {
         })
 
       const responseData = response.data.body.userName;
-      
-      dispatch(profileUser(authToken)); // màj username dans store
-      setEditUsername(""); // Réinitialiser le champ username
-      setInfoError(""); // Réinitialiser le message d'erreur
 
-      alert('Pseudo mis à jour avec succès !');
+      if(responseData){
+        dispatch(profileUser(authToken)); // màj username dans store
+        setEditUsername(""); // Réinitialiser le champ username
+        setInfoError(""); // Réinitialiser le message d'erreur
+
+        alert('Pseudo mis à jour avec succès !');
+      }
     } catch (error) {
       alert("Erreur lors de la mise à jour de l'username :" + error.message);
       setInfoError("Une erreur s'est produite lors de la mise à jour des informations utilisateur.")
