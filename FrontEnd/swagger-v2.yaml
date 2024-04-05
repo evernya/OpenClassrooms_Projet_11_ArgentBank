@@ -9,17 +9,171 @@ basePath: /api/v2
 schemes:
   - https
 paths:
-#Route pour récupérer les transactions par compte et par mois.
-/user/accounts/{accountID}/transactions/currentMonth:
-  get:
-    security:
-      - Bearer: []
-    tags:
-      - Transactions Module
-    summary: User Account API
-    description: Returns all transactions for the current month, grouped by account
-    produces:
-      - application/json
+  #Route déjà existante en v1
+  /user/login:
+    post:
+      tags:
+        - User Module
+      summary: Login
+      description: API for Login
+      parameters:
+        - in: body
+          name: body
+          description: Login Payload
+          required: true
+          schema:
+            $ref: '#/definitions/Login'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Login Successfully
+          schema:
+            $ref: '#/definitions/LoginResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/signup:
+    post:
+      tags:
+        - User Module
+      summary: Signup
+      description: API for Signup
+      parameters:
+        - in: body
+          name: body
+          description: Signup Payload
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Signup Successfully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/profile:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for fetching a user profile
+      responses:
+        '200':
+          description: User profile retrieved successfully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Profile API
+      description: API for updating a user profile
+      parameters:
+        - in: body
+          name: body
+          description: Update user profile attributes
+          required: true
+          schema:
+            $ref: '#/definitions/UserProfile'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User profile retrieved successfully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  #Route pour récupérer les transactions par compte et par mois.
+  /user/accounts/{accountID}/transactions/currentMonth:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: User Account API
+      description: Returns all transactions for the current month, grouped by account
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: accountID
+          description: User account ID
+          required: true
+          type: integer
+          format: int64
+        - in: query
+          name: startDate
+          description: Start date for which transactions must be extracted
+          required: false
+          type: string
+          format: date
+        - in: query
+          name: endDate
+          description: End date for which transactions must be extracted
+          required: false
+          type: string
+          format: date
+      responses:
+        '200':
+          description: Success, returns transactions grouped by account for the current month
+          schema:
+            type: object
+            properties:
+              transactions:
+                type: array
+                items:
+                  $ref: '#/definitions/TransactionGroupedByAccount'
+        '400':
+          description: Invalid query, incorrect month format or missing parameters
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Invalid or missing parameters"
+        '401':
+          description: Unauthorized, the user is not authenticated or lacks authorization
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Unauthorized - Please login to access this resource"
+        '404':
+          description: No transactions found for the current month and the specified user
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "No transactions found for the current month and the specified user"
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Internal server error, please try again later"
+  #Route modifier, ajouter ou supprimer des informations sur une transaction
+  /user/accounts/{accountID}/transactions/{transactionID}:
     parameters:
       - in: path
         name: accountID
@@ -27,290 +181,298 @@ paths:
         required: true
         type: integer
         format: int64
-      - in: query
-        name: startDate
-        description: Start date for which transactions must be extracted (format : YYYY-MM-DD)
-        required: false
-        type: string
-        format: date
-      - in: query
-        name: endDate
-        description: End date for which transactions must be extracted (format : YYYY-MM-DD)
-        required: false
-        type: string
-        format: date
-    responses:
-      '200':
-        description: Success, returns transactions grouped by account for the current month
-        schema:
-          type: object
-          properties:
-            transactions:
-              type: array
-              items:
-                $ref: '#/definitions/TransactionGroupedByAccount'
-      '400':
-        description: Invalid query, incorrect month format or missing parameters
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Invalid or missing parameters"
-      '401':
-        description: Unauthorized, the user is not authenticated or lacks authorization
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Unauthorized - Please login to access this resource"
-      '404':
-        description: No transactions found for the current month and the specified user
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "No transactions found for the current month and the specified user"
-      '500':
-        description: Internal Server Error
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Internal server error, please try again later"
+      - in: path
+        name: transactionID
+        description: Account transaction ID
+        required: true
+        type: integer
+        format: int64
+    ##Route pour visualiser par catégorie
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: View transaction details by filters
+      description: Retrieves transaction details filtered by transaction type, category, and note
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: transactionType
+          description: Filter transactions by type
+          required: false
+          type: string
+        - in: query
+          name: category
+          description: Filter transactions by category
+          required: false
+          type: string
+        - in: query
+          name: note
+          description: Filter transactions by note
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Success, returns the details of the requested transaction
+          schema:
+            type: object
+            properties:
+              transactions:
+                type: array
+                items:
+                  $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid query
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Invalid or missing parameters"
+        '401':
+          description: Unauthorized, the user is not authenticated or lacks authorization
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Unauthorized - Please login to access this resource"
+        '404':
+          description: No transactions found for the specified user
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "No transactions found for the specified user"
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Internal server error, please try again later"
+    ##Mettre à jour les détails d'une transaction
+    put:
+      summary: Update transaction information
+      description: Updates the information in an existing transaction
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      parameters:
+        - in: body
+          name: transaction
+          description: The new transaction information
+          schema:
+            $ref: '#/definitions/TransactionForModification'
+      responses:
+        '200':
+          description: Success, transaction updated successfully
+          schema:
+            type: object
+            properties:
+              transactions:
+                type: array
+                items:
+                  $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid request, missing or incorrect transaction data
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Invalid transaction data"
+        '401':
+          description: Unauthorized, the user is not authenticated or lacks authorization
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Unauthorized - Please login to access this resource"
+        '404':
+          description: No transactions found for the specified user
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "No transactions found for the specified user"
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Internal server error, please try again later"
+    ##Ajouter 
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: Add a new transaction
+      description: Adds a new transaction
+      parameters:
+        - in: body
+          name: transaction
+          description: The information of the new transaction
+          schema:
+            $ref: '#/definitions/TransactionForAddition'
+      responses:
+        '201':
+          description: Success, transaction added successfully
+          schema:
+            type: object
+            properties:
+              transactions:
+                type: array
+                items:
+                  $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid request, missing or incorrect transaction data
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Invalid transaction data"
+        '401':
+          description: Unauthorized, the user is not authenticated or lacks authorization
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Unauthorized - Please login to access this resource"
+        '404':
+          description: No transactions found for the specified user
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "No transactions found for the specified user"
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Internal server error, please try again later"
+    ##Supprimer
+    delete:
+      summary: Delete a transaction
+      description: Deletes an existing transaction
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      responses:
+        '204':
+          description: Success, transaction deleted successfully
+          schema:
+            type: object
+            properties:
+              transactions:
+                type: array
+                items:
+                  $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid query
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Invalid or missing parameters"
+        '401':
+          description: Unauthorized, the user is not authenticated or lacks authorization
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Unauthorized - Please login to access this resource"
+        '404':
+          description: No transactions found for the specified user
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "No transactions found for the specified user"
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Internal server error, please try again later"
 
-#Route pour ajouter, modifier ou supprimer des informations sur une transaction
-/user/accounts/{accountID}/transactions/{transactionsID}:
-  parameters:
-    - in: path
-      name: accountID
-      description: User account ID
-      required: true
-      type: integer
-      format: int64
-    - in: path
-      name: transactionID
-      description: Account transaction ID
-      required: true
-      type: integer
-      format: int64
-  ##Visualiser les détails d'une transaction
-  get:
-    security:
-      - Bearer: []
-    tags:
-      - Transactions Module
-    summary: View transaction details
-    description: Retrieves the details of a specific transaction
-    responses:
-      '200':
-        description: Success, returns the details of the requested transaction
-        schema:
-          type: object
-          properties:
-            transactions:
-              type: array
-              items:
-                $ref: '#/definitions/Transaction'
-      '400':
-        description: Invalid query
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Invalid or missing parameters"
-      '401':
-        description: Unauthorized, the user is not authenticated or lacks authorization
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Unauthorized - Please login to access this resource"
-      '404':
-        description: No transactions found for the specified user
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "No transactions found for the specified user"
-      '500':
-        description: Internal Server Error
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Internal server error, please try again later"
-  ##Mettre à jour les détails d'une transaction
-  put:
-    summary: Update transaction information
-    description: Updates the information in an existing transaction
-    security:
-      - Bearer: []
-    tags:
-      - Transactions Module
-    parameters:
-      - in: body
-        name: transaction
-        description: The new transaction information
-        schema:
-          $ref: '#/definitions/Transaction'
-    responses:
-      '200':
-        description: Success, transaction updated successfully
-        schema:
-          type: object
-          properties:
-            transactions:
-              type: array
-              items:
-                $ref: '#/definitions/Transaction'
-      '400':
-        description: Invalid request, missing or incorrect transaction data
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Invalid transaction data"
-      '401':
-        description: Unauthorized, the user is not authenticated or lacks authorization
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Unauthorized - Please login to access this resource"
-      '404':
-        description: No transactions found for the specified user
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "No transactions found for the specified user"
-      '500':
-        description: Internal Server Error
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Internal server error, please try again later"
-  ##Ajouter 
-  post:
-    security:
-      - Bearer: []
-    tags:
-      - Transactions Module
-    summary: Add a new transaction
-    description: Adds a new transaction
-    parameters:
-      - in: body
-        name: transaction
-        description: The information of the new transaction
-        schema:
-          $ref: '#/definitions/Transaction'
-    responses:
-      '201':
-        description: Success, transaction added successfully
-        schema:
-          type: object
-          properties:
-            transactions:
-              type: array
-              items:
-                $ref: '#/definitions/Transaction'
-      '400':
-        description: Invalid request, missing or incorrect transaction data
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Invalid transaction data"
-      '401':
-        description: Unauthorized, the user is not authenticated or lacks authorization
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Unauthorized - Please login to access this resource"
-      '404':
-        description: No transactions found for the specified user
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "No transactions found for the specified user"
-      '500':
-        description: Internal Server Error
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Internal server error, please try again later"
-  ##Supprimer
-  delete:
-    summary: Delete a transaction
-    description: Deletes an existing transaction
-    security:
-      - Bearer: []
-    tags:
-      - Transactions Module
-    responses:
-      '204':
-        description: Success, transaction deleted successfully
-        schema:
-          type: object
-          properties:
-            transactions:
-              type: array
-              items:
-                $ref: '#/definitions/Transaction'
-      '400':
-        description: Invalid query
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Invalid or missing parameters"
-      '401':
-        description: Unauthorized, the user is not authenticated or lacks authorization
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Unauthorized - Please login to access this resource"
-      '404':
-        description: No transactions found for the specified user
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "No transactions found for the specified user"
-      '500':
-        description: Internal Server Error
-        schema:
-          type: object
-          properties:
-            error:
-              type: string
-              example: "Internal server error, please try again later"
-
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
 definitions:
+  User:
+    properties:
+      email:
+        type: string
+        description: user email
+      password:
+        type: string
+        description: user password
+      firstName:
+        type: string
+        description: user first name
+      lastName:
+        type: string
+        description: user last name
+      userName:
+        type: string
+        description: user public name
+  Login:
+    properties:
+      email:
+        type: string
+        description: user email
+      password:
+        type: string
+        description: user password
+  ApiResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+        properties:
+          id:
+            type: string
+          email:
+            type: string
+  LoginResponse:
+    type: object
+    properties:
+      token:
+        type: string
+  UserProfile:
+    type: object
+    properties:
+      userName:
+        type: string
   Transaction:
     type: object
     properties:
@@ -331,6 +493,15 @@ definitions:
       description:
         type: string
         description: Transaction description
+      transactionType:
+        type: string
+        description: Type of the transaction
+      category:
+        type: string
+        description: Category of the transaction
+      note:
+        type: string
+        description: Additional note for the transaction
   TransactionGroupedByAccount:
     type: object
     properties:
@@ -379,4 +550,4 @@ definitions:
       id:
         type: integer
         format: int64
-        description: ID of the transaction to delete 
+        description: ID of the transaction to delete
