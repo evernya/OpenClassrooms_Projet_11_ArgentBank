@@ -1,4 +1,5 @@
 //Component
+@import '../Components/Card/card';
 @import '../Components/EditName/EditName';
 @import '../Components/Feature/feature';
 @import '../Components//Form//form';
@@ -10,7 +11,6 @@
 //Page
 @import '../Pages/Error/error';
 @import '../Pages/Login/login';
-@import '../Pages/Profile/profile';
 
 
 html {
@@ -20,7 +20,7 @@ html {
     text-align: center;
     color: #2c3e50;
 }
-  
+
 body {
     margin: 0;
     display: flex;
@@ -28,21 +28,38 @@ body {
     min-height: 100vh;
 }
 
+.main {
+    flex: 1;
+}
 
-.main {flex: 1;}
-  
-.bg-dark {background-color: #12002b; padding: 30px 0;}
-  
+.bg-dark {
+    background-color: #12002b;
+    padding: 30px 0;
+}
+
 .sr-only {
     border: 0 !important;
-    clip: rect(1px, 1px, 1px, 1px) !important; /* 1 */
+    clip: rect(1px, 1px, 1px, 1px) !important;
+    /* 1 */
     -webkit-clip-path: inset(50%) !important;
-    clip-path: inset(50%) !important; /* 2 */
+    clip-path: inset(50%) !important;
+    /* 2 */
     height: 1px !important;
     margin: -1px !important;
     overflow: hidden !important;
     padding: 0 !important;
     position: absolute !important;
     width: 1px !important;
-    white-space: nowrap !important; /* 3 */
+    white-space: nowrap !important;
+    /* 3 */
+}
+
+.loader {
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: white;
+    z-index: -99;
 }
