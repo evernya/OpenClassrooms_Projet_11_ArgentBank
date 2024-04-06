@@ -9,12 +9,11 @@ import { hostName } from './api';
 export const profileUser = createAsyncThunk(
   "user/profile",
 
-  //2nd
-  async (getToken, thunkAPI) => {
+  async (authToken, thunkAPI) => {
     try{
       const response = await axios.post(`${hostName}/user/profile`, {}, {
         headers: {
-          Authorization: `Bearer ${getToken}`
+          Authorization: `Bearer ${authToken}`
         }
       });
 

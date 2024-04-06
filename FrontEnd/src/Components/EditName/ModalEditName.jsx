@@ -70,17 +70,17 @@ export default function ModalEditName({ modalOnClick }) {
         <div className="modal__content--wrapper">
           <div className="modal__content--wrapper-input">
             <label htmlFor="username">User name :</label>
-            <input id="username" type="text" value={editUsername} onChange={(e) => setEditUsername(e.target.value)}/>
+            <input id="username" type="text" name="username" value={editUsername} onChange={(e) => setEditUsername(e.target.value)}/>
           </div>
 
           <div className="modal__content--wrapper-input">
-            <label htmlFor="username">Fist name :</label>
-            <input type="text" name="username" value={profileUserData ? profileUserData.firstName : ""} disabled="disabled" />
+            <label htmlFor="firstname">Fist name :</label>
+            <input type="text" name="firstname" value={profileUserData ? profileUserData.firstName : ""} disabled="disabled" />
           </div>
 
           <div className="modal__content--wrapper-input">
-            <label htmlFor="username">Last name :</label>
-            <input type="text" name="username" value={profileUserData ? profileUserData.lastName : ""} disabled="disabled" />
+            <label htmlFor="lastname">Last name :</label>
+            <input type="text" name="lastname" value={profileUserData ? profileUserData.lastName : ""} disabled="disabled" />
           </div>
 
           <div className="error-message">{infoError}</div>
