@@ -311,30 +311,28 @@ paths:
               error:
                 type: string
                 example: "Internal server error, please try again later"
-    ##Ajouter 
+    ##Ajouter des informations
     post:
       security:
         - Bearer: []
       tags:
         - Transactions Module
-      summary: Add a new transaction
-      description: Adds a new transaction
+      summary: Add transaction information
+      description: Adds information about a new transaction
       parameters:
         - in: body
           name: transaction
-          description: The information of the new transaction
+          description: Information about the transaction to be added
           schema:
             $ref: '#/definitions/TransactionForAddition'
       responses:
         '201':
-          description: Success, transaction added successfully
+          description: Success, transaction information added successfully
           schema:
             type: object
             properties:
-              transactions:
-                type: array
-                items:
-                  $ref: '#/definitions/Transaction'
+              transaction:
+                $ref: '#/definitions/Transaction'
         '400':
           description: Invalid request, missing or incorrect transaction data
           schema:
@@ -351,14 +349,6 @@ paths:
               error:
                 type: string
                 example: "Unauthorized - Please login to access this resource"
-        '404':
-          description: No transactions found for the specified user
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-                example: "No transactions found for the specified user"
         '500':
           description: Internal Server Error
           schema:
@@ -367,24 +357,17 @@ paths:
               error:
                 type: string
                 example: "Internal server error, please try again later"
-    ##Supprimer
+    ##Supprimer des informations
     delete:
-      summary: Delete a transaction
-      description: Deletes an existing transaction
+      summary: Delete transaction information
+      description: Deletes information about an existing transaction
       security:
         - Bearer: []
       tags:
         - Transactions Module
       responses:
         '204':
-          description: Success, transaction deleted successfully
-          schema:
-            type: object
-            properties:
-              transactions:
-                type: array
-                items:
-                  $ref: '#/definitions/Transaction'
+          description: Success, transaction information deleted successfully
         '400':
           description: Invalid query
           schema:
